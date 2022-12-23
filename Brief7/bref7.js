@@ -139,28 +139,23 @@ function supprimer(sup) {
   };
 }
 //////// Edit //////////
+
 function edit(edit) {
-  let edt = document.getElementById("edit");
-  let ajt = document.getElementById("add");
-  edt.style.display = "block";
-  ajt.style.display = "none";
+  let edite = document.getElementById("edit");
+  let add = document.getElementById("add");
+  edite.style.display = "block";
+  add.style.display = "none";
   let table = edit.closest("tr");
   let tdata = table.querySelectorAll("td");
   let tabledata = [];
   let inputdata = [];
-  tdata.forEach((elm) => tabledata.push(elm.innerHTML));
+  tdata.forEach((element) => tabledata.push(element.innerHTML));
   let input = document.querySelectorAll("form input,select");
-  input.forEach((elm) => inputdata.push(elm));
+  input.forEach((element) => inputdata.push(element));
   for (let i = 0; i < tabledata.length - 2; i++) {
     inputdata[i].value = tabledata[i];
   }
-  console.log(tabledata[5]);
-  if (tabledata[5] == "Oui") {
-    document.getElementById("inlineRadio1").checked = true;
-  } else if (tabledata[5] == "Non") {
-    document.getElementById("inlineRadio2").checked = true;
-  }
-  edt.onclick = function () {
+  edite.onclick = function () {
     ajouter();
     if (arr.length != 6) {
       e.preventDefault();
@@ -169,8 +164,8 @@ function edit(edit) {
         tdata[i].innerHTML = arrvalue[i];
       }
       clearFields();
-      edt.style.display = "none";
-      ajt.style.display = "block";
+      edite.style.display = "none";
+      add.style.display = "block";
     }
   };
 }
