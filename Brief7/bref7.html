@@ -7,42 +7,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bref7</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="Style.css">
-    <script src="bref7.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./bref7.js" defer></script>
 </head>
+
 <body>
     <nav class="navbar  navbar-dark bg-dark ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Jouda Cosmétique</a>
+        </div>
     </nav>
+
     <div class="container py-5">
         <div class="row justify-content-md-center">
             <div class="col-10">
-                <form name="f1" id="Cosmétique-form">
+                <form name="f1" id="Cosmétique-form" onsubmit="onSave(event)">
                     <div class="mb-3">
                         <label for="Nom" class="form-label fw-bold">Nom :</label>
-                        <input type="text" class="form-control"  id="Nom" placeholder="Nom">
-                        <div id="NomOblig" class="form-text"></div>
+                        <input type="text" class="form-control"  id="inputName" placeholder="Nom">
+                        <div class="form-text" id="inputNameError" style="color: red; display: none;">
+                            * le nom est obligatoire
+                        </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="Marque" class="form-label fw-bold">Marque :</label>
-                        <input type="text" class="form-control"  id="Marque" placeholder="Marque">
-                        <div id="MarqueOblig" class="form-text"></div>
+                        <input type="text" class="form-control"  id="inputMarque" placeholder="Marque">
+                        <div id="inputMarqueError" class="form-text" style="color: red; display: none;">
+                            * Remplir le champ
+                        </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="Prix" class="form-label fw-bold">Prix :</label>
-                        <input type="text" class="form-control"  id="Prix" placeholder="Prix">
-                        <div id="PrixOblig" class="form-text"></div>
+                        <input type="text" class="form-control" id="inputPrix" placeholder="Prix">
+                        <div id="inputPrixError" class="form-text" style="color: red; display: none;">
+                            * Remplir le champ
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="Date" class="form-label fw-bold">Date :</label>
-                        <input type="Date" class="form-control" id="Date">
-                        <!-- <div id="Date" class="form-text"> * la Date est obligatoire</div> -->
+                        <input type="date" class="form-control" id="inputDate">
+                        <div id="inputDateError" class="form-text" style="color: red; display: none;">
+                            * Remplir le champ
+                        </div>
                     </div>
+
                     <div class="mb-3">
-                        <select class="form-select  fw-bold" id="produit" aria-label="Floating label select example">
-                          <option value="selected" selected>Type de produit </option>
+                        <label for="selectProduit" class="form-label fw-bold">Type de produit :</label>
+                        <select class="form-select  fw-bold" id="selectTypeProduit">
+                          <option value="" selected>Type de produit </option>
                           <option value="Hygiéne et toilette">Hygiéne et toilette</option>
                           <option value="Soins esthétiques">Soins esthétiques</option>
                           <option value="Proquits solaires">Produits solaires</option>
@@ -51,53 +66,58 @@
                           <option value="Entretien capillaires">Entretien capillaires</option>
                           <option value="Parfums">Parfums</option>
                         </select>
+                        <div id="selectProduitError" class="form-text" style="color: red; display: none;">
+                            * Remplir le champ
+                        </div>
                     </div>
-                    <div id="selectOblig" class="form-text pb-3"></div>
+
                     <div class="mb-3">
                         <label for="promotion" class="form-label fw-bold py-2">Et en promotion :</label><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Oui">
-                            <label class="form-check-label" for="inlineRadio1">Oui</label>
+                            <input class="form-check-input" name="promotion" type="radio" id="radioPromotionOui" value="Oui">
+                            <label class="form-check-label" for="radioPromotionOui">Oui</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Non">
-                            <label class="form-check-label" for="inlineRadio2">Non</label>
+                            <input class="form-check-input" name="promotion" type="radio" id="radioPromotionNon" value="Non" checked>
+                            <label class="form-check-label" for="radioPromotionNon">Non</label>
                         </div>
                     </div>
-                    <div id="radioOblig" class="form-text pb-3"></div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
-                        <button class="btn btn-primary me-md-2" type="button" id="add" value="add">Ajouter</button>
-                        <button class="btn btn-primary me-md-2" id="edit">save</button>
+                        <button class="btn btn-primary me-md-2" type="submit" id="buttonSave">Ajouter</button>
                     </div>
                 </form>
+
                 <hr class="my-7">
-                <table id="tbl" class="table my-7">
+
+                <table class="table my-7">
                     <thead>
                         <tr>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Marque</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Type de produit</th>
-                            <th scope="col">Et en promotion :</th>
-                            <th scope="col">Actions</th>
+                            <th>Nom</th>
+                            <th>Marque</th>
+                            <th>Prix</th>
+                            <th>Date</th>
+                            <th>Type de produit</th>
+                            <th>Et en promotion :</th>
+                            <th>Actions</th>
                         </tr> 
                     </thead>
-                    </tbody>
+                    <tbody id="tabx"></tbody>
                 </table>
+
                 <div id="modal">
                     <div id="container">
                         <h2>Supprimer le produit</h2>
                         <p>êtes-vous sûr de vouloir supprimer?</p>
                         <div>
-                            <button id="supprimer" value="sup">Supprimer</button>
-                            <button id="annuler">Annuler</button>
+                            <button onclick="confirmDelete()">Supprimer</button>
+                            <button onclick="cancelDelete()">Annuler</button>
                         </div>
                     </div>
                 </div>
-             </div>
+            </div>
         </div>
-    </div>
+	</div>
+
 </body>
 </html>
